@@ -1,0 +1,28 @@
+.meetingRoomContainer {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+legend {
+    font-size: 1.3rem;
+}
+
+fieldset {
+    padding: 3rem;
+}
+
+.inputContainer {
+    margin: 2rem;
+}
+
+.labels {
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+}
+
+.cLabels {
+    margin: 0 10px 0 3px;
+}
