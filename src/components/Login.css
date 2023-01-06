@@ -1,0 +1,22 @@
+.loginContainer {
+  display: flex;
+  justify-content: center;
+  height: 60vh;
+  align-items: center;
+}
+
+.keycloakLoginBtn {
+  padding: 20px 50px;
+  background-color: #278ba9;
+  border: 10px solid #afbabd;
+  box-shadow: 2px 3px 6px 0px;
+  cursor: pointer;
+  font-size: 1rem;
+  color: white;
+  font-weight: bold;
+}
+
+#logo {
+  width: 2%;
+  margin-left: -54px;
+}

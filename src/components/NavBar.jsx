@@ -1,30 +1,59 @@
-import React from 'react'
-import './navbar.css'
-import { NavLink } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import "./navbar.css";
+import { NavLink } from "react-router-dom";
+import { useKeycloak } from "@react-keycloak/web";
+import { useNavigate } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
 const NavBar = () => {
-    return (
-        <div className='navContainer'>
-            <div className='pages'>
-                <div className='page'>
-                    <NavLink to={'/'}>Home</NavLink>
-                </div>
-                <div className='page'>
-                    <NavLink to={'/booking'}>Booking</NavLink>
-                </div>
-                <div className='page'>
-                    <NavLink to={'/meetingRoom'}>Meeting Rooms</NavLink>
-                </div>
-            </div>
+  const { keycloak } = useKeycloak();
+  const token = keycloak.token;
+  const [Token, setToken] = useState();
 
-            <div className='loginout'>
-                <div className='loginoutBtn'>
-                    Login
-                </div>
-            </div>
+  useEffect(() => {
+    if (token) {
+      setToken(jwt_decode(token));
+    }
+  }, [token]);
 
+  const t = Token ? console.log(Token.realm_access.roles[0]) : null;
+  console.log(t);
+
+  const navigate = useNavigate();
+  const isLoggedIn = keycloak.authenticated;
+  const Logout = () => {
+    navigate("/");
+    keycloak.logout();
+  };
+  return (
+    <div className="navContainer">
+      <div className="pages">
+        <div className="page">
+          <NavLink to={"/home"}>Home</NavLink>
         </div>
-    )
-}
+        <div className="page">
+          <NavLink to={"/booking"}>Booking</NavLink>
+        </div>
+        <div className="page">
+          <NavLink to={"/meetingRoom"}>Meeting Rooms</NavLink>
+        </div>
+      </div>
 
-export default NavBar
+      <div className="loginout">
+        <div className="loginoutBtn">
+          {isLoggedIn ? (
+            <button
+              onClick={() => {
+                Logout();
+              }}
+            >
+              Logout
+            </button>
+          ) : null}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default NavBar;
