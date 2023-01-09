@@ -1,24 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./navbar.css";
 import { NavLink } from "react-router-dom";
 import { useKeycloak } from "@react-keycloak/web";
 import { useNavigate } from "react-router-dom";
-import jwt_decode from "jwt-decode";
+// import jwt_decode from "jwt-decode";
 
 const NavBar = () => {
   const { keycloak } = useKeycloak();
-  const token = keycloak.token;
-  const [Token, setToken] = useState();
+  // const token = keycloak.token;
+  // const [Token, setToken] = useState();
 
-  useEffect(() => {
-    if (token) {
-      setToken(jwt_decode(token));
-    }
-  }, [token]);
+  // useEffect(() => {
+  //   if (token) {
+  //     setToken(jwt_decode(token));
+  //   }
+  // }, [token]);
 
-  const t = Token ? console.log(Token.realm_access.roles[0]) : null;
-  console.log(t);
-
+  // let userRole = Token ? Token.realm_access.roles[0] : null;
+  // console.log(userRole);
   const navigate = useNavigate();
   const isLoggedIn = keycloak.authenticated;
   const Logout = () => {

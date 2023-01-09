@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Login.css";
 import logo from "../photos/keycloak.png";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,14 @@ import { useKeycloak } from "@react-keycloak/web";
 const Login = () => {
   const navigate = useNavigate();
   const { keycloak } = useKeycloak();
-  if (keycloak.authenticated) navigate("/home");
+  // if (keycloak.authenticated) navigate("/home");
+
+  useEffect(() => {
+    if (keycloak.authenticated) {
+      navigate("/home");
+    }
+  }, [keycloak.authenticated]);
+
   return (
     <div className="loginContainer">
       <button className="keycloakLoginBtn" onClick={() => keycloak.login()}>
