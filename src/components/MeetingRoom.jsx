@@ -3,6 +3,8 @@ import "./meetingRoom.css";
 
 const MeetingRoom = () => {
   const [room, setRoom] = useState([]);
+  const [updateRoom, setupdateRoom] = useState({});
+
   useEffect(() => {
     fetch("http://localhost:8000/getAllRooms", {
       method: "GET",
@@ -16,11 +18,51 @@ const MeetingRoom = () => {
       .then((data) => {
         setRoom(data);
       });
-  });
+  }, []);
   console.log(room);
+
+  const handleStatusChange = (room) => {
+    fetch(`http://localhost:8000/updateRoom/${room._id}`, {
+      method: "PUT",
+      body: JSON.stringify({ ...room, status: !room.status }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setRoom(data));
+  };
+
+  const handleDelete = (roomId) => {
+    fetch(`http://localhost:8000/deleteRoom/${roomId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setRoom(data));
+  };
+
+  const handleUpdate = (roomId) => {
+    fetch(`http://localhost:8000/getOneRoom/${roomId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setupdateRoom(data));
+  };
+
+  const changeUpdate = (event) => {
+    setupdateRoom({ ...updateRoom, room_name: event.target.value });
+    console.log(updateRoom);
+  };
+
   return (
     <>
-      <div className="meetingRoomContainer">
+      {/* <div className="meetingRoomContainer">
         <form>
           <fieldset>
             <legend>Meeting Room</legend>
@@ -69,30 +111,96 @@ const MeetingRoom = () => {
             <button>Add</button>
           </fieldset>
         </form>
-      </div>
-      <table>
-        {room.map((roo, i) => (
-          <p>{roo.room_name}</p>
-        ))}
-        {/* <thead>
+      </div> */}
+      <table className="meetingRoomTable">
+        <thead>
           <tr>
-            <td>Room Name</td>
-            <td>Location</td>
-            <td>Capacity</td>
-            <td>Facilities</td>
-            <td>Status</td>
+            <th>Room Name</th>
+            <th>Location</th>
+            <th>Capacity</th>
+            <th>Facilities</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>5A</td>
-            <td>5th floor</td>
-            <td>5</td>
-            <td>aircon</td>
-            <td>True</td>
-          </tr>
-        </tbody> */}
+          {room.map((roo, i) => (
+            <tr key={roo._id}>
+              <td>{roo.room_name}</td>
+              <td>{roo.location}</td>
+              <td>{roo.capacity}</td>
+              <td>
+                {roo.facilities.map((facility, i) => (
+                  <p key={i}>{facility}</p>
+                ))}
+              </td>
+              <td>
+                {roo.status === true ? <p>Engage</p> : <p>available</p>}
+                <button onClick={() => handleStatusChange(roo)}>
+                  Change Status
+                </button>
+              </td>
+              <td>
+                <button onClick={() => handleDelete(roo._id)}>Delete</button>
+                <button onClick={() => handleUpdate(roo._id)}>Update</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
+
+      <form className="meetingUpdateForm">
+        <fieldset>
+          <legend>Meeting Room</legend>
+
+          <div className="inputContainer">
+            <p className="labels">Room Name</p>
+            <input
+              type="text"
+              value={
+                JSON.stringify(updateRoom) === "" ? "" : updateRoom.room_name
+              }
+              onChange={changeUpdate}
+            />
+          </div>
+
+          <div className="inputContainer">
+            <p className="labels">Location</p>
+            <input
+              type="text"
+              value={
+                JSON.stringify(updateRoom) === "" ? "" : updateRoom.location
+              }
+            />
+          </div>
+
+          <div className="inputContainer">
+            <p className="labels">Capacity</p>
+            <input
+              type="number"
+              value={
+                JSON.stringify(updateRoom) === "" ? "" : updateRoom.capacity
+              }
+            />
+          </div>
+
+          <div className="inputContainer">
+            <p className="labels">Facilities</p>
+            <input type="checkbox" id="microphone" />
+            <label className="cLabels" htmlFor="microphone">
+              Microphone
+            </label>
+            <input type="checkbox" id="projector" />
+            <label className="cLabels" htmlFor="projector">
+              Projector
+            </label>
+            <input type="checkbox" id="aircon" />
+            <label className="cLabels" htmlFor="aircon">
+              Aircon
+            </label>
+          </div>
+          <button>Add</button>
+        </fieldset>
+      </form>
     </>
   );
 };
