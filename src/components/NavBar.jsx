@@ -21,6 +21,7 @@ const NavBar = () => {
   const navigate = useNavigate();
   const isLoggedIn = keycloak.authenticated;
   const Logout = () => {
+    localStorage.clear();
     navigate("/");
     keycloak.logout();
   };

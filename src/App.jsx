@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import NavBar from "./components/NavBar";
 import Login from "./components/Login";
 import Home from "./components/Home";
 import Booking from "./components/Booking";
 import MeetingRoom from "./components/MeetingRoom";
 import Err from "./components/Err";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import cloak from "./keycloak/Keycloak";
 import { ReactKeycloakProvider, useKeycloak } from "@react-keycloak/web";
 import PrivateRoute from "./keycloak/PrivateRoute";
+import AddmeetingRoom from "./components/AddmeetingRoom";
 
 const App = () => {
   return (
@@ -23,6 +29,11 @@ const App = () => {
 
 const SetRoutes = () => {
   const { keycloak } = useKeycloak();
+
+  useEffect(() => {
+    localStorage.setItem("keycloakToken", keycloak.token);
+  }, [keycloak.token]);
+
   return (
     <Routes>
       <Route path="/" element={<Login />}></Route>
@@ -52,15 +63,22 @@ const SetRoutes = () => {
                 <MeetingRoom />
               </PrivateRoute>
             ) : (
-              <PrivateRoute>
-                <Booking />
-              </PrivateRoute>
+              <Navigate to={-1} />
             )
           ) : (
             <PrivateRoute>
               <MeetingRoom />
             </PrivateRoute>
           )
+        }
+      ></Route>
+
+      <Route
+        path="/addMeetingRoom"
+        element={
+          <PrivateRoute>
+            <AddmeetingRoom />
+          </PrivateRoute>
         }
       ></Route>
 
