@@ -35,7 +35,9 @@ const NavBar = () => {
           <NavLink to={"/booking"}>Booking</NavLink>
         </div>
         <div className="page">
-          <NavLink to={"/meetingRoom"}>Meeting Rooms</NavLink>
+          {keycloak.hasRealmRole("admin") ? (
+            <NavLink to={"/meetingRoom"}>Meeting Rooms</NavLink>
+          ) : null}
         </div>
       </div>
 

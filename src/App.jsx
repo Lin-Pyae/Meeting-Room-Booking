@@ -15,6 +15,7 @@ import cloak from "./keycloak/Keycloak";
 import { ReactKeycloakProvider, useKeycloak } from "@react-keycloak/web";
 import PrivateRoute from "./keycloak/PrivateRoute";
 import AddmeetingRoom from "./components/AddmeetingRoom";
+import AddBooking from "./components/AddBooking";
 
 const App = () => {
   return (
@@ -78,6 +79,15 @@ const SetRoutes = () => {
         element={
           <PrivateRoute>
             <AddmeetingRoom />
+          </PrivateRoute>
+        }
+      ></Route>
+
+      <Route
+        path="/addBooking"
+        element={
+          <PrivateRoute>
+            <AddBooking />
           </PrivateRoute>
         }
       ></Route>
