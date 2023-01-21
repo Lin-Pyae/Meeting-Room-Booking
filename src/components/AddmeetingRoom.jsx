@@ -67,7 +67,73 @@ const AddmeetingRoom = () => {
   return (
     <div>
       <form className="meetingUpdateForm">
-        <div className="inputContainer">
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            value={change === null ? "" : change.room_name}
+            name="room_name"
+            className="form-control"
+            id="roomName"
+            placeholder="Room Name"
+            onChange={handleChange}
+          />
+          <label htmlFor="roomName">Room Name</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            value={change === null ? "" : change.location}
+            name="location"
+            className="form-control"
+            id="Location"
+            placeholder="Location"
+            onChange={handleChange}
+          />
+          <label htmlFor="Location">Location</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input
+            type="number"
+            value={change === null ? "" : change.capacity}
+            name="capacity"
+            className="form-control"
+            id="Capacity"
+            placeholder="Capacity"
+            onChange={handleChange}
+          />
+          <label htmlFor="Capacity">Capacity</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            name="facilities"
+            className="form-control"
+            id="Facilities"
+            placeholder="Facilities"
+            ref={facility}
+          />
+          <label htmlFor="Facilities">Facilities</label>
+          <button onClick={addFacility}>Add Facility</button>
+          {change === null
+            ? ""
+            : change.facilities.map((facility, index) => (
+                <div key={index}>
+                  <input
+                    onClick={removeFacility}
+                    type="checkbox"
+                    id={facility}
+                  />{" "}
+                  <label className="cLabels" htmlFor={facility}>
+                    {facility}
+                  </label>
+                </div>
+              ))}
+        </div>
+
+        {/* <div className="inputContainer">
           <p className="labels">Room Name</p>
           <input
             type="text"
@@ -117,7 +183,7 @@ const AddmeetingRoom = () => {
                   </label>
                 </div>
               ))}
-        </div>
+        </div> */}
         <button
           onClick={
             location.state == null
@@ -125,7 +191,7 @@ const AddmeetingRoom = () => {
               : (e) => handleUpdate(e, change._id)
           }
         >
-          {location.state == null ? "Add" : "Update"}
+          {location.state == null ? "Add Room" : "Update"}
         </button>
       </form>
     </div>

@@ -4,10 +4,10 @@ import { useKeycloak } from "@react-keycloak/web";
 
 const AddBooking = () => {
   const location = useLocation();
-  let currentTime = Date.now();
   const { keycloak } = useKeycloak();
-
   const [bookings, setBookings] = useState(location.state.data);
+  let currentTime = Date.now();
+
   const title = useRef();
   const number = useRef();
   const date = useRef();
@@ -58,6 +58,21 @@ const AddBooking = () => {
         }
       });
   };
+
+  const fdate = useRef();
+  const fstart = useRef();
+  const fend = useRef();
+  const handleFilter = (event) => {
+    event.preventDefault();
+    let s = `${fdate.current.value}T${fstart.current.value}:00`;
+    let e = `${fdate.current.value}T${fend.current.value}:00`;
+    let f = filtered.filter(
+      (x) => x.start_time <= Date.parse(s) && Date.parse(e) <= x.end_time
+    );
+    console.log(f);
+    setBookings(f);
+  };
+
   return (
     <>
       <h1 style={{ textAlign: "center", marginBottom: "10px" }}>
@@ -72,7 +87,15 @@ const AddBooking = () => {
         <input ref={end_time} type="time" />
         <button onClick={handleAdd}>Book</button>
       </form>
-      <table>
+
+      <form>
+        <input ref={fdate} type="date" />
+        <input ref={fstart} type="time" />
+        <input ref={fend} type="time" />
+        <button onClick={handleFilter}>Filter</button>
+      </form>
+
+      <table className="table table-success table-striped">
         <thead>
           <tr>
             <th>Meeting Title</th>

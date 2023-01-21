@@ -16,7 +16,9 @@ import { ReactKeycloakProvider, useKeycloak } from "@react-keycloak/web";
 import PrivateRoute from "./keycloak/PrivateRoute";
 import AddmeetingRoom from "./components/AddmeetingRoom";
 import AddBooking from "./components/AddBooking";
-
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "../node_modules/bootstrap/dist/js/bootstrap.bundle";
+import "../node_modules/bootstrap-icons/font/bootstrap-icons.css";
 const App = () => {
   return (
     <ReactKeycloakProvider authClient={cloak}>

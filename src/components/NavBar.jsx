@@ -29,14 +29,27 @@ const NavBar = () => {
     <div className="navContainer">
       <div className="pages">
         <div className="page">
-          <NavLink to={"/home"}>Home</NavLink>
+          <NavLink to={"/home"} className="btn btn-outline-primary">
+            Home
+          </NavLink>
         </div>
         <div className="page">
-          <NavLink to={"/booking"}>Booking</NavLink>
+          <NavLink to={"/booking"} className="btn btn-outline-primary">
+            Booking
+          </NavLink>
         </div>
         <div className="page">
           {keycloak.hasRealmRole("admin") ? (
-            <NavLink to={"/meetingRoom"}>Meeting Rooms</NavLink>
+            <NavLink to={"/meetingRoom"} className="btn btn-outline-primary">
+              Meeting Rooms
+            </NavLink>
+          ) : null}
+        </div>
+        <div className="page">
+          {keycloak.hasRealmRole("admin") ? (
+            <NavLink to={"/addMeetingRoom"} className="btn btn-outline-primary">
+              Add Meeting Rooms
+            </NavLink>
           ) : null}
         </div>
       </div>
@@ -45,6 +58,7 @@ const NavBar = () => {
         <div className="loginoutBtn">
           {isLoggedIn ? (
             <button
+              className="btn btn-danger"
               onClick={() => {
                 Logout();
               }}

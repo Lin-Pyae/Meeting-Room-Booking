@@ -33,50 +33,43 @@ const Booking = () => {
       );
   };
 
-  const handleFilter = () => {};
-
   return (
-    <>
-      <form>
-        <input type="date" />
-        <input type="time" />
-        <input type="time" />
-        <button onClick={handleFilter}>Filter</button>
-      </form>
-      <table>
-        <thead>
-          <tr>
-            <th>Room Name</th>
-            <th>Location</th>
-            <th>Capacity</th>
-            <th>Facilities</th>
+    <table className="table table-success table-striped">
+      <thead>
+        <tr>
+          <th>Room Name</th>
+          <th>Location</th>
+          <th>Capacity</th>
+          <th>Facilities</th>
+        </tr>
+      </thead>
+      <tbody>
+        {meetingRoom.map((room, index) => (
+          <tr key={index}>
+            <td>{room.room_name}</td>
+            <td>{room.location}</td>
+            <td>{room.capacity}</td>
+            <td>
+              {room.facilities.map((facility, i) => (
+                <p key={i}>{facility}</p>
+              ))}
+            </td>
+            <td>
+              {room.status === true ? (
+                <b>Renovation In Process</b>
+              ) : (
+                <button
+                  class="btn btn-success"
+                  onClick={() => handleBook(room._id, room.room_name)}
+                >
+                  Book Room
+                </button>
+              )}
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          {meetingRoom.map((room, index) => (
-            <tr key={index}>
-              <td>{room.room_name}</td>
-              <td>{room.location}</td>
-              <td>{room.capacity}</td>
-              <td>
-                {room.facilities.map((facility, i) => (
-                  <p key={i}>{facility}</p>
-                ))}
-              </td>
-              <td>
-                {room.status === true ? (
-                  <b>Renovation In Process</b>
-                ) : (
-                  <button onClick={() => handleBook(room._id, room.room_name)}>
-                    Book Room
-                  </button>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </>
+        ))}
+      </tbody>
+    </table>
   );
 };
 

@@ -24,7 +24,7 @@ const Home = () => {
 
   console.log(bookings);
   return (
-    <table>
+    <table className="table table-success table-striped">
       <thead>
         <tr>
           <th>Meeting Title</th>
