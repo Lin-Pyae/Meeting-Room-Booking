@@ -59,40 +59,60 @@ const AddBooking = () => {
       });
   };
 
-  const fdate = useRef();
-  const fstart = useRef();
-  const fend = useRef();
-  const handleFilter = (event) => {
-    event.preventDefault();
-    let s = `${fdate.current.value}T${fstart.current.value}:00`;
-    let e = `${fdate.current.value}T${fend.current.value}:00`;
-    let f = filtered.filter(
-      (x) => x.start_time <= Date.parse(s) && Date.parse(e) <= x.end_time
-    );
-    console.log(f);
-    setBookings(f);
-  };
-
   return (
     <>
       <h1 style={{ textAlign: "center", marginBottom: "10px" }}>
         Meeting Room Name : {location.state.room_name}
       </h1>
 
-      <form>
-        <input ref={title} type="text" />
-        <input ref={number} type="number" />
-        <input ref={date} type="date" />
-        <input ref={start_time} type="time" />
-        <input ref={end_time} type="time" />
-        <button onClick={handleAdd}>Book</button>
-      </form>
-
-      <form>
-        <input ref={fdate} type="date" />
-        <input ref={fstart} type="time" />
-        <input ref={fend} type="time" />
-        <button onClick={handleFilter}>Filter</button>
+      <form className="mb-4">
+        <div className="row">
+          <div className="col-2">
+            <input
+              ref={title}
+              type="text"
+              className="form-control"
+              placeholder="Meeting Title"
+            />
+          </div>
+          <div className="col-2">
+            <input
+              ref={number}
+              type="number"
+              className="form-control"
+              placeholder="Attendees"
+            />
+          </div>
+          <div className="col-2">
+            <input
+              ref={date}
+              type="date"
+              className="form-control"
+              placeholder="Date"
+            />
+          </div>
+          <div className="col-2">
+            <input
+              ref={start_time}
+              type="time"
+              className="form-control"
+              placeholder="Start Time"
+            />
+          </div>
+          <div className="col-2">
+            <input
+              ref={end_time}
+              type="time"
+              className="form-control"
+              placeholder="End Time"
+            />
+          </div>
+          <div className="col-2">
+            <button className="btn btn-success" onClick={handleAdd}>
+              Book
+            </button>
+          </div>
+        </div>
       </form>
 
       <table className="table table-success table-striped">

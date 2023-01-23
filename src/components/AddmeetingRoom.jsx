@@ -66,8 +66,8 @@ const AddmeetingRoom = () => {
 
   return (
     <div>
-      <form className="meetingUpdateForm">
-        <div class="form-floating mb-3">
+      <form className="meetingUpdateForm w-25 m-auto mt-5">
+        <div className="form-floating mb-3">
           <input
             type="text"
             value={change === null ? "" : change.room_name}
@@ -80,7 +80,7 @@ const AddmeetingRoom = () => {
           <label htmlFor="roomName">Room Name</label>
         </div>
 
-        <div class="form-floating mb-3">
+        <div className="form-floating mb-3">
           <input
             type="text"
             value={change === null ? "" : change.location}
@@ -93,7 +93,7 @@ const AddmeetingRoom = () => {
           <label htmlFor="Location">Location</label>
         </div>
 
-        <div class="form-floating mb-3">
+        <div className="form-floating mb-3">
           <input
             type="number"
             value={change === null ? "" : change.capacity}
@@ -106,85 +106,36 @@ const AddmeetingRoom = () => {
           <label htmlFor="Capacity">Capacity</label>
         </div>
 
-        <div class="form-floating mb-3">
+        <div className="input-group mb-3">
           <input
-            type="text"
-            name="facilities"
-            className="form-control"
-            id="Facilities"
-            placeholder="Facilities"
             ref={facility}
-          />
-          <label htmlFor="Facilities">Facilities</label>
-          <button onClick={addFacility}>Add Facility</button>
-          {change === null
-            ? ""
-            : change.facilities.map((facility, index) => (
-                <div key={index}>
-                  <input
-                    onClick={removeFacility}
-                    type="checkbox"
-                    id={facility}
-                  />{" "}
-                  <label className="cLabels" htmlFor={facility}>
-                    {facility}
-                  </label>
-                </div>
-              ))}
-        </div>
-
-        {/* <div className="inputContainer">
-          <p className="labels">Room Name</p>
-          <input
             type="text"
-            value={change === null ? "" : change.room_name}
-            name="room_name"
-            onChange={handleChange}
+            className="form-control"
+            placeholder="Facilities"
+            aria-label="Recipient's username"
+            aria-describedby="button-addon2"
           />
+          <button
+            className="btn btn-outline-secondary"
+            type="button"
+            id="button-addon2"
+            onClick={addFacility}
+          >
+            Add
+          </button>
         </div>
 
-        <div className="inputContainer">
-          <p className="labels">Location</p>
-          <input
-            type="text"
-            value={change === null ? "" : change.location}
-            name="location"
-            onChange={handleChange}
-          />
-        </div>
+        {change === null
+          ? ""
+          : change.facilities.map((facility, index) => (
+              <div key={index}>
+                <input onClick={removeFacility} type="checkbox" id={facility} />{" "}
+                <label htmlFor={facility}>{facility}</label>
+              </div>
+            ))}
 
-        <div className="inputContainer">
-          <p className="labels">Capacity</p>
-          <input
-            type="number"
-            value={change === null ? "" : change.capacity}
-            name="capacity"
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="inputContainer">
-          <p className="labels">Facilities</p>
-          <div>
-            <input type="text" ref={facility} />{" "}
-            <button onClick={addFacility}>Add Facility</button>
-          </div>
-          {change === null
-            ? ""
-            : change.facilities.map((facility, index) => (
-                <div key={index}>
-                  <input
-                    onClick={removeFacility}
-                    type="checkbox"
-                    id={facility}
-                  />{" "}
-                  <label className="cLabels" htmlFor={facility}>
-                    {facility}
-                  </label>
-                </div>
-              ))}
-        </div> */}
         <button
+          className="mt-3 btn btn-success"
           onClick={
             location.state == null
               ? handleAdd
