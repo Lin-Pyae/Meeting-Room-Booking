@@ -67,6 +67,7 @@ const MeetingRoom = () => {
           <th>Capacity</th>
           <th>Facilities</th>
           <th>Status</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>

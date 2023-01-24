@@ -5,6 +5,7 @@ const Booking = () => {
   const [meetingRoom, setMeetingRoom] = useState([]);
   const [Room, setRoom] = useState([]);
   const navigate = useNavigate();
+  let currentTime = Date.now();
 
   useEffect(() => {
     fetch("http://localhost:8000/getAllRooms", {
@@ -53,11 +54,15 @@ const Booking = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        let filtered = data.filter(
-          (room) => room.start_time === s && room.end_time === e
+        let todayBooking = data.filter((x) => currentTime < x.end_time);
+        let filtered = todayBooking.filter(
+          (room) =>
+            (s >= room.start_time && s < room.end_time) ||
+            (e >= room.start_time && e < room.end_time)
         );
         let rooms = filtered.map((room) => room.meeting_room);
         let final = Room.filter((x) => !rooms.includes(x._id));
+        console.log(todayBooking);
         console.log(Room);
         console.log(rooms);
         console.log(final);
@@ -95,6 +100,7 @@ const Booking = () => {
             <th>Location</th>
             <th>Capacity</th>
             <th>Facilities</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
