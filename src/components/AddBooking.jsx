@@ -20,12 +20,18 @@ const AddBooking = () => {
     event.preventDefault();
     let s = `${date.current.value}T${start_time.current.value}:00`;
     let e = `${date.current.value}T${end_time.current.value}:00`;
+    if (e < s) {
+      alert("You can't set the end time before the start time");
+    }
+    if (Date.parse(s) < currentTime) {
+      alert("Current time already passed your booking time");
+    }
 
-    console.log(s);
-    console.log(e);
-    console.log(date.current.value);
-    console.log(start_time.current.value);
-    console.log(keycloak.tokenParsed.sub);
+    // console.log(s);
+    // console.log(e);
+    // console.log(date.current.value);
+    // console.log(start_time.current.value);
+    // console.log(keycloak.tokenParsed.sub);
     fetch("http://127.0.0.1:8000/bookroom", {
       method: "POST",
       body: JSON.stringify({
