@@ -27,11 +27,6 @@ const AddBooking = () => {
       alert("Current time already passed your booking time");
     }
 
-    // console.log(s);
-    // console.log(e);
-    // console.log(date.current.value);
-    // console.log(start_time.current.value);
-    // console.log(keycloak.tokenParsed.sub);
     fetch("http://127.0.0.1:8000/bookroom", {
       method: "POST",
       body: JSON.stringify({
