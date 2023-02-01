@@ -10,22 +10,25 @@ const Home = () => {
   const endTime = useRef();
   let currentTime = Date.now();
 
-  // useEffect(() => {
-  //   fetch(`http://localhost:8000/yourBooking/${keycloak.tokenParsed.sub}`, {
-  //     method: "GET",
-  //     headers: {
-  //       token: localStorage.getItem("keycloakToken"),
-  //       "Content-Type": "application/json",
-  //     },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) =>
-  //       setBookings(data.filter((x) => currentTime < x.end_time))
-  //     );
-  // }, []);
+  useEffect(() => {
+    fetch(`http://localhost:8000/yourBooking/${keycloak.tokenParsed.sub}`, {
+      method: "GET",
+      headers: {
+        token: localStorage.getItem("keycloakToken"),
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) =>
+        setBookings(data.filter((x) => currentTime < x.end_time))
+      );
+  }, []);
 
   const handleEdit = (e) => {
     document.getElementById("updateForm").classList = "d-block";
+    document.getElementById("updateForm").classList = "my-4";
+    // document.getElementById("updateForm").classList = "m-auto";
+    // document.getElementById("updateForm").classList = "w-75";
     document.getElementById("title").value =
       e.target.parentNode.parentNode.firstChild.innerHTML;
     document.getElementById("date").value =
@@ -81,7 +84,19 @@ const Home = () => {
       }
     )
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        fetch(`http://localhost:8000/yourBooking/${keycloak.tokenParsed.sub}`, {
+          method: "GET",
+          headers: {
+            token: localStorage.getItem("keycloakToken"),
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) =>
+            setBookings(data.filter((x) => currentTime < x.end_time))
+          );
+      });
   };
 
   const handleCancel = (e) => {
@@ -89,24 +104,9 @@ const Home = () => {
     e.target.parentNode.parentNode.parentNode.classList = "d-none";
   };
 
-  useEffect(() => {
-    fetch(`http://localhost:8000/yourBooking/${keycloak.tokenParsed.sub}`, {
-      method: "GET",
-      headers: {
-        token: localStorage.getItem("keycloakToken"),
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) =>
-        setBookings(data.filter((x) => currentTime < x.end_time))
-      );
-    console.log("Hello");
-  }, []);
-
   return (
     <>
-      <form id="updateForm" className="mb-4 d-none">
+      <form id="updateForm" className="d-none">
         <div className="row">
           <div className="col-2">
             <input
@@ -145,11 +145,9 @@ const Home = () => {
             />
           </div>
           <div className="col-2">
-            <button className="btn btn-primary" onClick={handleUpdate}>
+            <button className="btn btn-primary me-3" onClick={handleUpdate}>
               Update
             </button>
-          </div>
-          <div className="col-2">
             <button className="btn btn-primary" onClick={handleCancel}>
               Cancel
             </button>
@@ -166,6 +164,7 @@ const Home = () => {
             <th>Start Time</th>
             <th>End Time</th>
             <th>Room Name</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
