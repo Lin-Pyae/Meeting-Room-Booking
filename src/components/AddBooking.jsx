@@ -69,47 +69,27 @@ const AddBooking = () => {
       <form className="mb-4">
         <div className="row">
           <div className="col-2">
-            <input
-              ref={title}
-              type="text"
-              className="form-control"
-              placeholder="Meeting Title"
-            />
+            <label htmlFor="">Meeting Title</label>
+            <input ref={title} type="text" className="form-control" />
           </div>
           <div className="col-2">
-            <input
-              ref={number}
-              type="number"
-              className="form-control"
-              placeholder="Attendees"
-            />
+            <label htmlFor="">Attendees</label>
+            <input ref={number} type="number" className="form-control" />
           </div>
           <div className="col-2">
-            <input
-              ref={date}
-              type="date"
-              className="form-control"
-              placeholder="Date"
-            />
+            <label htmlFor="">Meeting Date</label>
+            <input ref={date} type="date" className="form-control" />
           </div>
           <div className="col-2">
-            <input
-              ref={start_time}
-              type="time"
-              className="form-control"
-              placeholder="Start Time"
-            />
+            <label htmlFor="">Start Time</label>
+            <input ref={start_time} type="time" className="form-control" />
           </div>
           <div className="col-2">
-            <input
-              ref={end_time}
-              type="time"
-              className="form-control"
-              placeholder="End Time"
-            />
+            <label htmlFor="">End Time</label>
+            <input ref={end_time} type="time" className="form-control" />
           </div>
           <div className="col-2">
-            <button className="btn btn-success" onClick={handleAdd}>
+            <button className="btn btn-success m-4" onClick={handleAdd}>
               Book
             </button>
           </div>

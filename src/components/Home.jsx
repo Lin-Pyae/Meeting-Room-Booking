@@ -19,8 +19,9 @@ const Home = () => {
       },
     })
       .then((response) => response.json())
-      .then((data) =>
-        setBookings(data.filter((x) => currentTime < x.end_time))
+      .then(
+        (data) =>
+          data && setBookings(data.filter((x) => currentTime < x.end_time))
       );
   }, []);
 
